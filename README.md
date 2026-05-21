@@ -3,7 +3,7 @@
 Proyek akhir mata kuliah Algoritma dan Pemrograman (Semester 2).
 Sistem manajemen perpustakaan yang mengimplementasikan 4 pilar OOP, struktur data dinamis (Linked List manual), algoritma pencarian & pengurutan manual, serta komunikasi jaringan menggunakan protokol TCP dan format data JSON.
 
-## 👥 Anggota Kelompok 07
+## 👥 Anggota Kelompok 
 1. Kemal Ananda Syafaat - 2506621075
 2. Aristawidya Annisa Berliana - 2506621970
 3. Khodijah Sofia - 2506534604
