@@ -49,7 +49,7 @@ public:
 };
  
 // ==========================================
-// STRUKTUR DATA: LINKED LIST MANUAL (BONUS POIN)
+// LINKED LIST MANUAL 
 // ==========================================
 struct Node {
   Buku* data;
@@ -74,7 +74,6 @@ public:
       }
   }
  
-  // ALGORITMA SORTING MANUAL: Bubble Sort pada Linked List
   void sortByJudul() {
       if (!head) return;
       bool swapped;
@@ -87,7 +86,6 @@ public:
  
           while (ptr1->next != lptr) {
               if (ptr1->data->getJudul() > ptr1->next->data->getJudul()) {
-                  // Tukar data objeknya
                   Buku* temp = ptr1->data;
                   ptr1->data = ptr1->next->data;
                   ptr1->next->data = temp;
@@ -99,11 +97,9 @@ public:
       } while (swapped);
   }
  
-  // ALGORITMA SEARCHING MANUAL: Linear Search
   Buku* searchLinear(std::string keyword) {
       Node* temp = head;
       while (temp != nullptr) {
-          // Pencarian sederhana (case-sensitive)
           if (temp->data->getJudul().find(keyword) != std::string::npos) {
               return temp->data;
           }
@@ -112,7 +108,6 @@ public:
       return nullptr;
   }
  
-  // Mengubah seluruh isi Linked List menjadi format Array JSON
   std::string getAllAsJSON() {
       std::string json = "[";
       Node* temp = head;
@@ -126,24 +121,21 @@ public:
   }
 };
  
-BukuLinkedList perpustakaan; // Variabel global penampung data
+BukuLinkedList perpustakaan; 
  
-// Fungsi untuk menangani setiap klien (MULTITHREADING)
 void handleClient(int clientSocket) {
   char buffer[1024] = {0};
   read(clientSocket, buffer, 1024);
   std::string request(buffer);
   std::string response;
  
-  std::lock_guard<std::mutex> lock(mtx); // Mengunci data agar aman antar thread
+  std::lock_guard<std::mutex> lock(mtx); 
  
-  // DATA INTERCHANGE: Parsing Manual JSON Sederhana
   if (request.find("\"action\":\"list\"") != std::string::npos) {
-      perpustakaan.sortByJudul(); // Urutkan data dahulu sebelum dikirim
+      perpustakaan.sortByJudul(); 
       response = "{\"status\":\"success\",\"data\":" + perpustakaan.getAllAsJSON() + "}";
   }
   else if (request.find("\"action\":\"search\"") != std::string::npos) {
-      // Ambil keyword dari JSON string semisal {"action":"search","keyword":"C++"}
       size_t keyPos = request.find("\"keyword\":\"");
       if (keyPos != std::string::npos) {
           size_t start = keyPos + 11;
@@ -166,7 +158,6 @@ void handleClient(int clientSocket) {
 }
  
 int main() {
-  // Inisialisasi Data Buku bawaan awal
   perpustakaan.insert(new Buku(101, "Cara Coding Ala Hacker Solo", "Ribran Gabakuming"));
   perpustakaan.insert(new Buku(103, "Berenang Di Lautan Susu", "Stefani Skuy"));
   perpustakaan.insert(new Buku(102, "Cerita Horror Kuda Laut", "Widodo"));
@@ -187,7 +178,6 @@ int main() {
       int clientSocket = accept(serverFd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
       std::cout << "[SERVER] Klien terhubung!\n";
      
-      // Buat thread baru untuk setiap klien yang masuk
       std::thread(handleClient, clientSocket).detach();
   }
  
